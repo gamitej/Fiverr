@@ -1,8 +1,20 @@
 .navbar {
   display: flex;
+  color: white;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   background-color: #013914;
-  color: white;
+  transition: 0.5s all ease;
+
+  position: sticky;
+  position: 0;
+
+  &.active {
+    background-color: white;
+    color: black;
+  }
+
   .container {
     width: 1400px;
     display: flex;
@@ -22,6 +34,31 @@
       align-items: center;
       gap: 24px;
       font-weight: 550;
+      position: relative;
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+
+        .options {
+          position: absolute;
+          top: 50px;
+          right: 0;
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          border: 1px solid lightgray;
+          color: gray;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          width: 200px;
+          font-weight: 300;
+        }
+      }
+
       button {
         color: White;
         cursor: pointer;
@@ -35,5 +72,20 @@
         }
       }
     }
+  }
+
+  hr {
+    width: 100%;
+    height: 0;
+    border: 0.5px solid lightgray;
+  }
+
+  .menu {
+    color: gray;
+    width: 1400px;
+    display: flex;
+    font-weight: 300;
+    padding: 10px 0px;
+    justify-content: space-between;
   }
 }
