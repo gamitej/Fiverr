@@ -1,4 +1,4 @@
-import Feature from "../feeature/Feature";
+import Feature from "./feeature/Feature";
 
 const Home = () => {
   return (
