@@ -6,9 +6,10 @@
   justify-content: center;
   background-color: #013914;
   transition: 0.5s all ease;
+  z-index: 999;
 
   position: sticky;
-  position: 0;
+  top: 0;
 
   &.active {
     background-color: white;
