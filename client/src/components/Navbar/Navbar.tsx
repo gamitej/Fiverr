@@ -6,9 +6,10 @@ import { NavbarLinkDataType, navbarMenuLinkData } from "@/data/navbar.data";
 const Navbar = () => {
   const { pathname } = useLocation();
 
-  const [active, setActive] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [active, setActive] = useState<boolean>(false);
 
+  // ================= HOOKS =================
   useEffect(() => {
     const isActive = () => {
       window.scrollY > 0 ? setActive(true) : setActive(false);
