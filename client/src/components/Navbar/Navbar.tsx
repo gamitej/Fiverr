@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
 import "./Navbar.scss";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavbarLinkDataType, navbarMenuLinkData } from "@/data/navbar.data";
 
 const Navbar = () => {
+  const { pathname } = useLocation();
+
   const [active, setActive] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -25,10 +29,12 @@ const Navbar = () => {
    * TSX
    */
   return (
-    <div className={active ? "navbar active" : "navbar"}>
+    <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
-          <span className="text">fiverr</span>
+          <Link to="/" className="link">
+            <span className="text">fiverr</span>
+          </Link>
           <span className="dot">.</span>
         </div>
         <div className="links">
@@ -45,13 +51,23 @@ const Navbar = () => {
                 <div className="options">
                   {currentUser?.isSeller && (
                     <>
-                      <span>Gigs</span>
-                      <span>Add New Gig</span>
+                      <Link className="link" to="/gigs">
+                        Gigs
+                      </Link>
+                      <Link className="link" to="/add">
+                        Add New Gig
+                      </Link>
                     </>
                   )}
-                  <span>Orders</span>
-                  <span>Messages</span>
-                  <span>Logout</span>
+                  <Link className="link" to="/orders">
+                    Orders
+                  </Link>
+                  <Link className="link" to="messages">
+                    Messages
+                  </Link>
+                  <Link className="link" to="/">
+                    Logout
+                  </Link>
                 </div>
               )}
             </div>
@@ -59,12 +75,15 @@ const Navbar = () => {
         </div>
       </div>
 
-      {active && (
+      {(active || pathname !== "/") && (
         <>
           <hr />
           <div className="menu">
-            <span>Test</span>
-            <span>Test2</span>
+            {navbarMenuLinkData.map((item: NavbarLinkDataType) => (
+              <Link className={item.className} to={item.to} key={item.to}>
+                {item.label}
+              </Link>
+            ))}
           </div>
         </>
       )}
