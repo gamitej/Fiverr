@@ -1,10 +1,20 @@
+import { Link } from "react-router-dom";
 import "./CategoryCard.scss";
+import { CardsDataType } from "@/data/catCard.data";
 
-const CategoryCard = () => {
+interface CategoryCardProps {
+  item: CardsDataType;
+}
+
+const CategoryCard = ({ item }: CategoryCardProps) => {
   return (
-    <div className="catCard">
-      <div className="container"></div>
-    </div>
+    <Link to={`/gigs?cat=design`}>
+      <div className="catCard">
+        <img src={item.img} alt="" />
+        <span className="desc">{item.desc}</span>
+        <span className="title">{item.title}</span>
+      </div>
+    </Link>
   );
 };
 
