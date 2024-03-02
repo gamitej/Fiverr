@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../model/user.model.js";
 import { CompareHashData, HashData } from "../utils/Hash.js";
 
@@ -30,9 +31,22 @@ export const login = async (req, res) => {
     const isCorrectPasswd = await CompareHashData(password, user.password);
     if (!isCorrectPasswd) return res.status(400).json("wrong password!");
 
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isSeller: user.isSeller,
+      },
+      process.env.JWT_KEY
+    );
+
     const { password: userPasswd, ...userInfo } = user._doc;
 
-    return res.status(200).json({ message: "Login successful", userInfo });
+    return res
+      .cookie("accessToken", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ message: "Login successful", userInfo });
   } catch (error) {
     return res.status(500).json("Something went wrong!");
   }
