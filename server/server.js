@@ -1,8 +1,15 @@
 import express from "express";
-import Database from "./Database/database.js";
+import Database from "./database/database.js";
 
 import cors from "cors";
 import dotenv from "dotenv";
+
+import userRoute from "./routes/user.route.js";
+import gigRoute from "./routes/gig.route.js";
+import orderRoute from "./routes/order.route.js";
+import reviewRoute from "./routes/review.route.js";
+import messageRoute from "./routes/message.route.js";
+import conversationRoute from "./routes/conversation.route.js";
 
 const app = express();
 app.use(express.json());
@@ -22,6 +29,13 @@ const db = new Database(MONGO_URL, {
 db.connect().catch((err) =>
   console.error("❌ Error connecting to database:", err)
 );
+
+app.use("/api/gigs", gigRoute);
+app.use("/api/users", userRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/reviews", reviewRoute);
+app.use("/api/messages", messageRoute);
+app.use("/api/conversations", conversationRoute);
 
 // database disconnection
 process.on("SIGINT", async () => {
