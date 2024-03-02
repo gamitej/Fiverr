@@ -15,7 +15,7 @@ const Slide = ({
   arrowsScroll = 1,
 }: SlideProps) => {
   return (
-    <div className="slide">
+    <div className={`slide`}>
       <div className="container">
         <Slider slidesToShow={slidesToShow} arrowsScroll={arrowsScroll}>
           {children}
