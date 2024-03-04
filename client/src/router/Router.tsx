@@ -4,6 +4,7 @@ import Gig from "@/pages/gig/Gig";
 import Add from "@/pages/add/Add";
 import Home from "@/pages/home/Home";
 import Gigs from "@/pages/gigs/Gigs";
+import Login from "@/pages/login/Login";
 import Orders from "@/pages/orders/Orders";
 import MyGigs from "@/pages/myGigs/MyGigs";
 import Message from "@/pages/message/Message";
@@ -50,6 +51,14 @@ const Router = () => {
           element: <Message />,
         },
       ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "*",
+      element: <h2>Page Not Found</h2>,
     },
   ]);
 

@@ -14,14 +14,16 @@ import messageRoute from "./routes/message.route.js";
 import conversationRoute from "./routes/conversation.route.js";
 
 const app = express();
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors());
 
 // ========= ENV VARIABLE'S =========
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL;
+const CLIENT_URL = process.env.CLIENT_URL;
+
+app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cookieParser());
 
 // database connection
 const db = new Database(MONGO_URL, {
