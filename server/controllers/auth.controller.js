@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken";
 import User from "../model/user.model.js";
 import { CompareHashData, HashData } from "../utils/Hash.js";
+import createError from "../utils/createError.js";
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     // check if user doesn't exist
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
-      return res.status(409).json("User already exists");
+      return next(409, "User already exists");
     }
 
     // create new user
@@ -17,19 +18,19 @@ export const register = async (req, res) => {
     await newUser.save();
     return res.status(201).json("User created successfully");
   } catch (error) {
-    return res.status(500).json("Something went wrong!");
+    return next(error);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
     const user = await User.findOne({ username: username });
-    if (!user) return res.status(404).json("User not found!");
-
+    if (!user) return next(createError(404, "User not found!"));
     const isCorrectPasswd = await CompareHashData(password, user.password);
-    if (!isCorrectPasswd) return res.status(400).json("wrong password!");
+
+    if (!isCorrectPasswd) return next(createError(400, "Wrong password!"));
 
     const token = jwt.sign(
       {
@@ -48,7 +49,7 @@ export const login = async (req, res) => {
       .status(200)
       .json({ message: "Login successful", userInfo });
   } catch (error) {
-    return res.status(500).json("Something went wrong!");
+    return next(error);
   }
 };
 
