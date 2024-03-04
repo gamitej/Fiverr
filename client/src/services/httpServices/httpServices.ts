@@ -1,10 +1,11 @@
 import axios from "axios";
+import config from "../config";
 
-const http = {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete,
-};
+const endpoint = config.baseUrl;
+
+const http = axios.create({
+  baseURL: endpoint,
+  withCredentials: true,
+});
 
 export default http;
