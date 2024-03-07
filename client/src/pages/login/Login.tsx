@@ -3,25 +3,32 @@ import { useState, FormEvent, ChangeEvent } from "react";
 // type
 import { LoginRequest } from "@/type/pages/pages.type";
 import { LoginApi } from "@/services/ApiServices/auth/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userForm, setUserForm] = useState<LoginRequest>({
     username: "",
     password: "",
   });
 
-  // const [error, setError] = useState<null | string>(null);
+  const [error, setError] = useState<null | string>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setUserForm((prev) => ({ ...prev, [name]: value }));
+    if (error !== null) setError(null);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await LoginApi(userForm);
-    console.log(res);
+    const { error: isError, data } = await LoginApi(userForm);
+    if (isError) {
+      setError(data);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -48,6 +55,7 @@ const Login = () => {
         />
 
         <button type="submit">Login</button>
+        {error && error}
       </form>
     </div>
   );
