@@ -1,9 +1,11 @@
 import "./Login.scss";
-import { useState, FormEvent, ChangeEvent } from "react";
-// type
-import { LoginRequest } from "@/type/pages/pages.type";
-import { LoginApi } from "@/services/ApiServices/auth/auth.service";
 import { useNavigate } from "react-router-dom";
+import { useState, FormEvent, ChangeEvent } from "react";
+// type & data
+import { LoginRequest } from "@/type/pages/pages.type";
+import { handleSetSessionData } from "@/data/session.data";
+// services
+import { LoginApi } from "@/services/ApiServices/auth/auth.service";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,7 +13,6 @@ const Login = () => {
     username: "",
     password: "",
   });
-
   const [error, setError] = useState<null | string>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +21,7 @@ const Login = () => {
     if (error !== null) setError(null);
   };
 
+  // submit form and call login api
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -28,6 +30,7 @@ const Login = () => {
       setError(data);
     } else {
       navigate("/");
+      handleSetSessionData<object>("USER", data);
     }
   };
 
@@ -55,7 +58,7 @@ const Login = () => {
         />
 
         <button type="submit">Login</button>
-        {error && error}
+        {error && <p className="login-error">{error}</p>}
       </form>
     </div>
   );
