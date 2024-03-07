@@ -1,9 +1,19 @@
 import "./Navbar.scss";
-import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+// services
+import { LogoutApi } from "@/services/ApiServices/auth/auth.service";
+// types
+import { LoginResponse } from "@/type/pages/pages.type";
+// data
+import {
+  handleGetSessionData,
+  handleSetSessionData,
+} from "@/data/session.data";
 import { NavbarLinkDataType, navbarMenuLinkData } from "@/data/navbar.data";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -20,10 +30,12 @@ const Navbar = () => {
     };
   }, []);
 
-  const currentUser = {
-    id: 1,
-    isSeller: true,
-    username: "John Doe",
+  const currentUser = handleGetSessionData<LoginResponse>("USER");
+
+  const handleLogout = async () => {
+    await LogoutApi();
+    navigate("/");
+    handleSetSessionData<null>("USER", null);
   };
 
   /**
@@ -66,7 +78,7 @@ const Navbar = () => {
                   <Link className="link" to="messages">
                     Messages
                   </Link>
-                  <Link className="link" to="/">
+                  <Link className="link" to="/" onClick={handleLogout}>
                     Logout
                   </Link>
                 </div>

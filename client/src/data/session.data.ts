@@ -1,6 +1,6 @@
 export const handleSetSessionData = <T>(key: string, value: T) => {
-  if (!key || !value) {
-    throw new Error("Both key and value are required");
+  if (!key) {
+    throw new Error("key is required");
   }
   sessionStorage.setItem(key, JSON.stringify(value));
 };

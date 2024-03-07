@@ -8,6 +8,7 @@ import Login from "@/pages/login/Login";
 import Orders from "@/pages/orders/Orders";
 import MyGigs from "@/pages/myGigs/MyGigs";
 import Message from "@/pages/message/Message";
+import Register from "@/pages/register/Register";
 import Messages from "@/pages/mesaages/Messages";
 // components
 import Layout from "./Layout";
@@ -49,6 +50,10 @@ const Router = () => {
         {
           path: "/message/:id",
           element: <Message />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },

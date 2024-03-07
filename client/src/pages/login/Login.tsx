@@ -30,7 +30,7 @@ const Login = () => {
       setError(data);
     } else {
       navigate("/");
-      handleSetSessionData<object>("USER", data);
+      handleSetSessionData<object>("USER", data.userInfo);
     }
   };
 
